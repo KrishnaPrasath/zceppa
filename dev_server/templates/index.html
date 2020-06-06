@@ -1,0 +1,32 @@
+<form method="POST" action="">
+
+    <p><h4>News API</h4></p>
+    
+    <div>
+        <p>Choose categories</p>
+        <input type="checkbox" id="subscribeBusiness" name="0" value="business">
+        <label for="subscribeBusiness">Business</label>
+        <input type="checkbox" id="subscribeSports" name="1" value="sports">
+        <label for="subscribeSports">Sports</label>
+        <input type="checkbox" id="subscribeGeneral" name="2" value="general">
+        <label for="subscribeGeneral">General</label>
+        <input type="checkbox" id="subscribeEntertainment" name="3" value="entertainment">
+        <label for="subscribeEntertainment">Entertainment</label>
+        <input type="checkbox" id="subscribeHealth" name="4" value="health">
+        <label for="subscribeHealth">Health</label>
+    </div>
+    <div>
+        <p>Choose the date range</p>
+        <label for="from">From</label>
+        <input type="date" id="from" name="from" >
+    <br>
+        <label for="to">To</label>
+        <input type="date" id="to" name="to" >
+        
+    </div>
+    <div>
+        <button type="submit">FETCH</button>
+    </div>
+    
+
+</form>
