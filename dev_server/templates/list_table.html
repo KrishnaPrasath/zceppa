@@ -1,0 +1,21 @@
+<!-- author, title, description, 0published at and url image -->
+<h4>List News API</h4>
+<table border="1">
+    <tr>
+        <th>Author</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>PublishedAt</th>
+        <th>URL to Image</th>
+    </tr>
+    {% for news in newsData %}
+    <tr>
+        <td>{{news[0]}}</td>
+        <td>{{news[1]}}</td>
+        <td>{{news[2]}}</td>
+        <td>{{news[3]}}</td>
+        <td>{{news[4]}}</td>
+    </tr>
+    {% endfor %}
+    
+</table>

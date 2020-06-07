@@ -1,22 +1,22 @@
 <form method="POST" action="">
 
-    <p><h3>News API</h3></p>
+    <p><h4>LIST News</h4></p>
     
     <div>
-        <p><u>Choose categories</u></p>
-        <input type="checkbox" id="subscribeBusiness" name="0" value="business">
+        <p>Choose categories</p>
+        <input type="radio" id="subscribeBusiness" name="category" value="business">
         <label for="subscribeBusiness">Business</label>
-        <input type="checkbox" id="subscribeSports" name="1" value="sports">
+        <input type="radio" id="subscribeSports" name="category" value="sports">
         <label for="subscribeSports">Sports</label>
-        <input type="checkbox" id="subscribeGeneral" name="2" value="general">
+        <input type="radio" id="subscribeGeneral" name="category" value="general">
         <label for="subscribeGeneral">General</label>
-        <input type="checkbox" id="subscribeEntertainment" name="3" value="entertainment">
+        <input type="radio" id="subscribeEntertainment" name="category" value="entertainment">
         <label for="subscribeEntertainment">Entertainment</label>
-        <input type="checkbox" id="subscribeHealth" name="4" value="health">
+        <input type="radio" id="subscribeHealth" name="category" value="health">
         <label for="subscribeHealth">Health</label>
     </div>
     <div>
-        <p><u>Choose the date range</u></p>
+        <p>Choose the date range</p>
         <label for="from">From</label>
         <input type="date" id="from" name="from" >
     <br>
@@ -25,7 +25,6 @@
         
     </div>
     <div>
-        <br>
         <button type="submit">FETCH</button>
     </div>
     
