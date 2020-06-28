@@ -1,4 +1,4 @@
-from flask import Flask,jsonify,request,render_template,redirect
+from flask import Flask,jsonify,request,redirect
 from flaskext.mysql import MySQL
 import requests
 import yaml
@@ -33,62 +33,44 @@ def list_category(category,fromDate,toDate):
     return jsonify({"content":result})
 
 @app.route('/')
-def index():
-    con = mysql.connect();
-    cur = con.cursor()
-    query = "SELECT * FROM user"
-    result = cur.execute(query)
-    if(result > 0):
-        response = "data exist"
-    else:
-        response = "Table is empty"
-    return render_template('./index.html')
+def api_root():
+    return jsonify({
+        "Attention": "Avaiable api for the application",
+        "For_Categories": "/categories",
+        "To_Fetch-News": "/api/fetch-news?category={available-Category}&from={yyyy-mm-dd}&to={yyyy-mm-dd}",
+        "To_List-News": "/api/list-news?category={available-Category}&from={yyyy-mm-dd}&to={yyyy-mm-dd}",
+        "Z-Note": "Required params to be passed to get valid response"
+    })
 
 @app.route("/api/fetch-news",methods=["GET","POST"])
 def fetch():
     con = mysql.connect();
     cur = con.cursor()
-    if(request.method == 'GET'):
-        return render_template('index.html')
-    else:
-        requestData = request.form;
-        category = {
-            "0" : "business",
-            "1" : "sports",
-            "2" : "general",
-            "3" : "entertainment",
-            "4" : "health",
-        }
-        category_str = []
-        check_table()
-        for each in requestData:
-            if(each == "0" or each == "1" or each == "2" or each == "3" or each == "4" ):
-                newsData = fetch_news(requestData[each],requestData["from"],requestData["to"]);
-                for data in newsData:
-                    if(len(data)>0):
-                        update_table(data,cur,con,category[each])
-        cur.close()
-        return redirect('http://localhost:5000/api/list-news',code=302)
+    category = request.args.get('category')
+    fromDate = request.args.get('from')
+    toDate = request.args.get('to')
+    check_table()
+    newsData = fetch_news(category,fromDate,toDate);
+    for data in newsData:
+        if(len(data)>0):
+            update_table(data,cur,con,category)
+    cur.close()
+    return jsonify({
+            "A-success": "News data successfully fetched",
+            "content": newsData
+        })
 
 
 @app.route("/api/list-news",methods=["GET","POST"])
 def fetch_list_news():
     con = mysql.connect();
     cur = con.cursor()
-    if(request.method == 'GET'):
-        return render_template('list.html')
-    else:
-        requestData = request.form;
-        category = {
-            "0" : "business",
-            "1" : "sports",
-            "2" : "general",
-            "3" : "entertainment",
-            "4" : "health",
-        }
-        category_str = []
-        result = list_news(cur,con,requestData["category"],requestData["from"],requestData["to"])
-        return render_template('list_table.html',newsData = result)
+    category = request.args.get('category')
+    fromDate = request.args.get('from')
+    toDate = request.args.get('to')
+    category_str = []
+    result = list_news(cur,con,category,fromDate,toDate)
+    return jsonify({ "newsData" : result })
 
 @app.route("/api/categories",methods=["GET"])
 def list_categories():
@@ -96,7 +78,7 @@ def list_categories():
     cur = con.cursor()
     if(request.method == 'GET'):
         result = fetch_categories(cur,con)
-        return render_template('category.html',categories = result)
+        return jsonify({"categories": result})
     
 
 
